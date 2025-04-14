@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let touchEndY = 0;
         let touchStartTime = 0;
         let touchEndTime = 0;
-        const minSwipeDistance = 50; // Khoảng cách tối thiểu cho một cử chỉ vuốt (pixel)
-        const maxSwipeTime = 300; // Thời gian tối đa cho một cử chỉ vuốt (mili giây)
+        const minSwipeDistance = 30; // Giảm xuống 30px để nhạy hơn
+        const maxSwipeTime = 500; // Tăng lên 500ms để dễ vuốt hơn
         let isProcessingSwipe = false; // Cờ để ngăn nhiều cử chỉ vuốt cùng lúc
         
         // Lấy tham chiếu đến container tab
@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
         tabContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
         tabContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
         
+        // Ngăn cuộn mặc định để ưu tiên cử chỉ vuốt
+        tabContainer.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+        
         // Xử lý sự kiện bắt đầu chạm
         function handleTouchStart(event) {
             touchStartY = event.touches[0].clientY;
@@ -26,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Xử lý sự kiện kết thúc chạm
         function handleTouchEnd(event) {
-            // Nếu đang xử lý một cử chỉ vuốt, bỏ qua cái này
             if (isProcessingSwipe) return;
             
             touchEndY = event.changedTouches[0].clientY;
@@ -36,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const swipeDistance = touchEndY - touchStartY;
             const swipeTime = touchEndTime - touchStartTime;
             
-            // Kiểm tra xem cử chỉ chạm có phải là vuốt hợp lệ không (đủ nhanh và đủ dài)
+            // Kiểm tra xem cử chỉ chạm có phải là vuốt hợp lệ không
             if (Math.abs(swipeDistance) >= minSwipeDistance && swipeTime <= maxSwipeTime) {
                 isProcessingSwipe = true;
                 
@@ -68,31 +72,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Đặt lại cờ xử lý sau một độ trễ
                 setTimeout(() => {
                     isProcessingSwipe = false;
-                }, 500); // Cùng độ trễ như trong trình xử lý sự kiện wheel
+                }, 500);
             }
         }
         
         // Hàm để chuyển tab - sử dụng hàm switchTab hiện có từ script.js
         function switchTab(index) {
-            // Lấy hàm switchTab từ phạm vi toàn cục
             if (typeof window.switchTab === 'function') {
                 window.switchTab(index);
             } else {
-                // Triển khai dự phòng nếu hàm toàn cục không khả dụng
                 const menuItems = document.querySelectorAll('.menu-item');
                 const tabContents = document.querySelectorAll('.tab-content');
                 
                 if (index < 0 || index >= tabContents.length) return;
                 
-                // Xóa lớp active từ tất cả các mục menu và nội dung tab
                 menuItems.forEach(item => item.classList.remove('active'));
                 tabContents.forEach(tab => tab.classList.remove('active'));
                 
-                // Thêm lớp active vào mục menu và nội dung tab đã chọn
                 menuItems[index].classList.add('active');
                 tabContents[index].classList.add('active');
                 
-                // Làm mới hoạt ảnh AOS
                 setTimeout(() => {
                     if (typeof AOS !== 'undefined' && typeof AOS.refresh === 'function') {
                         AOS.refresh();
@@ -107,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const scrollToTopBtn = document.querySelector('.scroll-to-top');
         if (scrollToTopBtn) {
             tabContainer.addEventListener('touchend', function() {
-                // Hiển thị nút khi không ở tab đầu tiên
                 const currentTabIndex = Array.from(document.querySelectorAll('.menu-item')).findIndex(item => item.classList.contains('active'));
                 if (currentTabIndex > 0) {
                     scrollToTopBtn.classList.add('active');
