@@ -1,5 +1,6 @@
 // Khởi tạo AOS (Animate On Scroll)
 document.addEventListener('DOMContentLoaded', function() {
+    // Khởi tạo AOS (Animate On Scroll)
     AOS.init({
         duration: 800,
         easing: 'ease-in-out',
@@ -122,4 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             switchTab(0); // Chuyển về tab Home
         });
     }
+    
+    // Đưa hàm switchTab ra global scope để swipe-support.js có thể sử dụng
+    window.switchTab = switchTab;
 });
