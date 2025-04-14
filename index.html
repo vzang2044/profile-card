@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hansuke | Dev Anything</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Thêm thư viện AOS cho hiệu ứng scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
 
@@ -14,19 +16,153 @@
         Trình duyệt của bạn không hỗ trợ video.
     </video>
 
-    <div class="card">
-        <img src="images/avt.jpg" alt="Profile" class="profile-img">
-        <h2 class="name">Hansuke</h2>
-        <p class="job">Dev Anything</p>
-        <div class="social-icons">
-            <a href="#" id="facebook"><img src="images/facebook.png" alt="Facebook"></a>
-            <a href="#" id="instagram"><img src="images/instagram.png" alt="Instagram"></a>
-            <a href="#" id="tiktok"><img src="images/tiktok.png" alt="TikTok"></a>
-            <a href="#" id="github"><img src="images/github.png" alt="GitHub"></a>
+    <!-- Menu tròn bên trái -->
+    <div class="circle-menu">
+        <div class="menu-item active" data-tab="home">
+            <div class="circle-icon">
+                <img src="images/home-icon.png" alt="Home" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'></path><polyline points=\'9 22 9 12 15 12 15 22\'></polyline></svg>'">
+            </div>
+            <span class="menu-tooltip">Trang chủ</span>
         </div>
-        <a href="#" class="contact-btn">Contact me</a>
+        <div class="menu-item" data-tab="intro">
+            <div class="circle-icon">
+                <img src="images/intro-icon.png" alt="Intro" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><circle cx=\'12\' cy=\'12\' r=\'10\'></circle><line x1=\'12\' y1=\'16\' x2=\'12\' y2=\'12\'></line><line x1=\'12\' y1=\'8\' x2=\'12.01\' y2=\'8\'></line></svg>'">
+            </div>
+            <span class="menu-tooltip">Giới thiệu</span>
+        </div>
+        <div class="menu-item" data-tab="donate">
+            <div class="circle-icon">
+                <img src="images/donate-icon.png" alt="Donate" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><rect x=\'1\' y=\'4\' width=\'22\' height=\'16\' rx=\'2\' ry=\'2\'></rect><line x1=\'1\' y1=\'10\' x2=\'23\' y2=\'10\'></line></svg>'">
+            </div>
+            <span class="menu-tooltip">Ủng hộ</span>
+        </div>
     </div>
 
+    <!-- Tab Content -->
+    <div class="tab-container">
+        <!-- Tab 1: Home (Original Card) -->
+        <div class="tab-content active" id="home">
+            <div class="card" data-aos="fade-up">
+                <img src="images/avt.jpg" alt="Profile" class="profile-img">
+                <h2 class="name">Hansuke</h2>
+                <p class="job">Dev Anything</p>
+                <div class="social-icons">
+                    <a href="#" id="facebook"><img src="images/facebook.png" alt="Facebook"></a>
+                    <a href="#" id="instagram"><img src="images/instagram.png" alt="Instagram"></a>
+                    <a href="#" id="tiktok"><img src="images/tiktok.png" alt="TikTok"></a>
+                    <a href="#" id="github"><img src="images/github.png" alt="GitHub"></a>
+                </div>
+                <a href="#" class="contact-btn">Contact me</a>
+            </div>
+        </div>
+
+        <!-- Tab 2: Intro -->
+        <div class="tab-content" id="intro">
+            <div class="intro-container" data-aos="fade-up">
+                <h1 class="intro-title">GIỚI THIỆU</h1>
+                <div class="intro-divider"></div>
+                
+                <p class="intro-text">Bạn cũng không cần biết nhiều về tôi.</p>
+                
+                <div class="intro-content">
+                    <div class="intro-image">
+                        <img src="images/avt.jpg" alt="Profile" class="intro-profile-img">
+                    </div>
+                    <div class="intro-details">
+                        <h2 class="intro-subtitle">Server Management & Developer.</h2>
+                        <p class="intro-description">Ừ tôi cũng thiết kế một số thứ, phát triển một số project. Ít thôi nhưng tôi yêu thích những thứ tôi làm</p>
+                        
+                        <div class="intro-info">
+                            <div class="info-item">
+                                <span class="info-icon">➤</span>
+                                <span class="info-label">Website:</span>
+                                <span class="info-value">https://github.com/vzang2044</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">➤</span>
+                                <span class="info-label">Số ĐT:</span>
+                                <span class="info-value">+84946039187</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">➤</span>
+                                <span class="info-label">Nơi sống:</span>
+                                <span class="info-value">Hà Tĩnh - Việt Nam</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">➤</span>
+                                <span class="info-label">Ngày sinh:</span>
+                                <span class="info-value">23/8/200x</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">➤</span>
+                                <span class="info-label">Trình độ:</span>
+                                <span class="info-value">Noob Dev 😊</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon">➤</span>
+                                <span class="info-label">Email:</span>
+                                <span class="info-value">vzang204@gmail.com</span>
+                            </div>
+                        </div>
+                        
+                        <p class="intro-footer">Lời khuyên chân thành: " Đừng ném bùn vào người khác, rất có thể là bạn ném trượt và tay bạn sẽ bị bẩn "</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Donate -->
+        <div class="tab-content" id="donate">
+            <div class="donate-container" data-aos="fade-up">
+                <h1 class="donate-title">ỦNG HỘ</h1>
+                <div class="donate-divider"></div>
+                
+                <p class="donate-text">Bạn đã từng sử dụng thứ gì đó do tôi cung cấp và muốn ủng hộ việc mà tôi làm, hãy cho tôi một ly trà đá theo các cách sau.</p>
+                
+                <div class="donate-methods">
+                    <div class="donate-method" data-aos="fade-up" data-aos-delay="100">
+                        <div class="donate-icon bank-icon"></div>
+                        <h3>Chuyển qua Ngân Hàng</h3>
+                        <p>Tpbank,MBBank: 0946039187 - 230804121105</p>
+                    </div>
+                    
+                    <div class="donate-method" data-aos="fade-up" data-aos-delay="200">
+                        <div class="donate-icon momo-icon"></div>
+                        <h3>Chuyển tiền qua MOMO</h3>
+                        <p>0946039187</p>
+                    </div>
+                    
+                    <div class="donate-method" data-aos="fade-up" data-aos-delay="300">
+                        <div class="donate-icon paypal-icon"></div>
+                        <h3>Chuyển tiền qua Dép Lào Bay</h3>
+                        <p>0946039187</p>
+                    </div>
+                </div>
+                
+                <div class="author-section" data-aos="fade-up">
+                    <h2 class="author-name">Trần Văn Sang</h2>
+                    <p class="author-quote">Bình thường chứ không tầm thường.</p>
+                    
+                    <div class="author-social">
+                        <a href="#" id="author-facebook" class="social-circle facebook-icon"></a>
+                        <a href="#" id="author-messenger" class="social-circle messenger-icon"></a>
+                        <a href="#" id="author-telegram" class="social-circle telegram-icon"></a>
+                        <a href="#" id="author-email" class="social-circle email-icon"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thêm nút Back to Top -->
+    <div class="scroll-to-top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
