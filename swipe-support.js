@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let touchEndY = 0;
         let touchStartTime = 0;
         let touchEndTime = 0;
-        const minSwipeDistance = 30; // Giảm xuống 30px để nhạy hơn
-        const maxSwipeTime = 500; // Tăng lên 500ms để dễ vuốt hơn
+        const minSwipeDistance = 25;
+        const maxSwipeTime = 400;
         let isProcessingSwipe = false; // Cờ để ngăn nhiều cử chỉ vuốt cùng lúc
         
         // Lấy tham chiếu đến container tab
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Hàm để chuyển tab - sử dụng hàm switchTab hiện có từ script.js
+        // Hàm để chuyển tab
         function switchTab(index) {
             if (typeof window.switchTab === 'function') {
                 window.switchTab(index);
