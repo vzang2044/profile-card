@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let touchEndY = 0;
         let touchStartTime = 0;
         let touchEndTime = 0;
-        const minSwipeDistance = 25;
-        const maxSwipeTime = 400;
-        let isProcessingSwipe = false; // Cờ để ngăn nhiều cử chỉ vuốt cùng lúc
+        const minSwipeDistance = 25; // Tối ưu: 25px
+        const maxSwipeTime = 400; // Tối ưu: 400ms
+        let isProcessingSwipe = false;
         
         // Lấy tham chiếu đến container tab
         const tabContainer = document.querySelector('.tab-container');
@@ -18,9 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
         tabContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
         tabContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
         
-        // Ngăn cuộn mặc định để ưu tiên cử chỉ vuốt
+        // Xử lý touchmove để ngăn cuộn chỉ khi vuốt hợp lệ
         tabContainer.addEventListener('touchmove', function(e) {
-            e.preventDefault();
+            const currentY = e.touches[0].clientY;
+            const swipeDistance = Math.abs(currentY - touchStartY);
+            if (swipeDistance > 10) { // Chỉ ngăn khi có dấu hiệu vuốt
+                e.preventDefault();
+            }
         }, { passive: false });
         
         // Xử lý sự kiện bắt đầu chạm
@@ -76,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Hàm để chuyển tab
+        // Hàm để chuyển tab - sử dụng hàm switchTab hiện có từ script.js
         function switchTab(index) {
             if (typeof window.switchTab === 'function') {
                 window.switchTab(index);

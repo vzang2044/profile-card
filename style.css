@@ -17,6 +17,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     display: block;
+    touch-action: manipulation; /* Ngăn phóng to trên mobile */
 }
 
 /* Điều chỉnh tab-container */
@@ -68,7 +69,7 @@ body {
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, background 0.3s ease;
     z-index: 1000;
 }
 
@@ -117,7 +118,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     border: 2px solid transparent;
 }
 
@@ -144,7 +145,7 @@ body {
     font-size: 14px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, left 0.3s ease;
     white-space: nowrap;
 }
 
@@ -183,17 +184,6 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-/* Card chính (Tab 1) */
-.card {
-    background: #1c1c1c;
-    width: 280px;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    margin: 0 auto;
 }
 
 /* Ảnh đại diện */
@@ -250,7 +240,7 @@ body {
     color: white;
     text-decoration: none;
     margin-top: 10px;
-    transition: 0.3s;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Hiệu ứng hover nút Contact */
@@ -423,17 +413,17 @@ body {
 
 .bank-icon {
     background-color: #3498db;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='5' width='20' height='14' rx='2'/%3E%3Cline x1='2' y1='10' x2='22' y2='10'/%3E%3C/svg%3E");
+    background-image: url('images/bank-icon.png'), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='5' width='20' height='14' rx='2'/%3E%3Cline x1='2' y1='10' x2='22' y2='10'/%3E%3C/svg%3E");
 }
 
 .momo-icon {
     background-color: #e67e22;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='M12 8v8'/%3E%3Cpath d='M8 12h8'/%3E%3C/svg%3E");
+    background-image: url('images/momo-icon.png'), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='M12 8v8'/%3E%3Cpath d='M8 12h8'/%3E%3C/svg%3E");
 }
 
 .paypal-icon {
     background-color: #e74c3c;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 6h-5a2 2 0 0 0-2 2v9'/%3E%3Cpath d='M17 18h-5a2 2 0 0 1-2-2V7'/%3E%3Cpath d='M13 6v12'/%3E%3C/svg%3E");
+    background-image: url('images/paypal-icon.png'), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 6h-5a2 2 0 0 0-2 2v9'/%3E%3Cpath d='M17 18h-5a2 2 0 0 1-2-2V7'/%3E%3Cpath d='M13 6v12'/%3E%3C/svg%3E");
 }
 
 .donate-method h3 {
@@ -478,7 +468,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
     background-size: 50%;
     background-position: center;
     background-repeat: no-repeat;
@@ -490,43 +480,61 @@ body {
 }
 
 .facebook-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'/%3E%3C/svg%3E");
+    background-image: url('images/facebook-icon.png'), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'/%3E%3C/svg%3E");
 }
 
 .messenger-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'/%3E%3C/svg%3E");
+    background-image: url('images/messenger-icon.png'), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'/%3E%3C/svg%3E");
 }
 
 .telegram-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 7.5a2.25 2.25 0 0 0 .126 4.073l3.9 1.205 2.306 7.4c.18.597.724 1.02 1.372 1.02.448 0 .852-.188 1.147-.493l2.5-2.5 3.5 2.5c.3.214.676.335 1.07.335.957 0 1.75-.763 1.75-1.75V4.13c0-1.12-.92-2.027-2.043-1.696z'/%3E%3C/svg%3E");
+    background-image: url('images/telegram-icon.png'), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 7.5a2.25 2.25 0 0 0 .126 4.073l3.9 1.205 2.306 7.4c.18.597.724 1.02 1.372 1.02.448 0 .852-.188 1.147-.493l2.5-2.5 3.5 2.5c.3.214.676.335 1.07.335.957 0 1.75-.763 1.75-1.75V4.13c0-1.12-.92-2.027-2.043-1.696z'/%3E%3C/svg%3E");
 }
 
 .email-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpolyline points='22,6 12,13 2,6'/%3E%3C/svg%3E");
+    background-image: url('images/email-icon.png'), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpolyline points='22,6 12,13 2,6'/%3E%3C/svg%3E");
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .circle-menu {
-        left: 15px;
+        left: 10px; /* Giảm để tránh cắt */
+        gap: 15px; /* Giảm khoảng cách */
     }
-    
+    .circle-icon {
+        width: 40px; /* Nhỏ hơn trên mobile */
+        height: 40px;
+    }
+    .circle-icon img {
+        width: 20px; /* Điều chỉnh icon */
+        height: 20px;
+    }
+    .menu-tooltip {
+        font-size: 12px; /* Nhỏ hơn */
+        padding: 4px 8px;
+    }
     .intro-content {
         flex-direction: column;
     }
-    
     .intro-image {
         margin: 0 auto;
     }
-    
     .donate-methods {
         flex-direction: column;
         align-items: center;
     }
-    
     .donate-method {
         width: 100%;
         max-width: 300px;
+    }
+    #background-video {
+        display: none; /* Ẩn video trên mobile */
+    }
+    body {
+        background-image: url('images/background-fallback.jpg'); /* Hình ảnh dự phòng */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
     }
 }
 
@@ -534,6 +542,9 @@ body {
 [data-aos] {
     opacity: 0;
     transition-property: opacity, transform;
+    transition-duration: 0.8s; /* Đồng bộ với AOS */
+    transition-timing-function: ease-in-out;
+    will-change: opacity, transform; /* Tối ưu GPU */
 }
 
 [data-aos].aos-animate {
