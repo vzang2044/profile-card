@@ -1,66 +1,81 @@
 // swipe-support.js - Thêm hỗ trợ cử chỉ vuốt cho thiết bị di động
 document.addEventListener('DOMContentLoaded', function() {
-    // Chỉ áp dụng phát hiện vuốt trên thiết bị di động
     if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        // Biến để theo dõi vị trí chạm
         let touchStartY = 0;
         let touchEndY = 0;
         let touchStartTime = 0;
         let touchEndTime = 0;
-        const minSwipeDistance = 25; // Tối ưu: 25px
-        const maxSwipeTime = 400; // Tối ưu: 400ms
+        const minSwipeDistance = 50; // Tăng ngưỡng để yêu cầu vuốt mạnh hơn
+        const maxSwipeTime = 300; // Giảm thời gian tối đa để đảm bảo vuốt nhanh
         let isProcessingSwipe = false;
-        
-        // Lấy tham chiếu đến container tab
+
         const tabContainer = document.querySelector('.tab-container');
-        
-        // Thêm trình nghe sự kiện chạm
+
         tabContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
         tabContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
-        
-        // Xử lý touchmove để ngăn cuộn chỉ khi vuốt hợp lệ
+
+        // Chỉ ngăn cuộn khi có dấu hiệu vuốt mạnh
         tabContainer.addEventListener('touchmove', function(e) {
             const currentY = e.touches[0].clientY;
             const swipeDistance = Math.abs(currentY - touchStartY);
-            if (swipeDistance > 10) { // Chỉ ngăn khi có dấu hiệu vuốt
-                e.preventDefault();
+            const activeTab = document.querySelector('.tab-content.active');
+            const isScrollable = activeTab.scrollHeight > activeTab.clientHeight;
+
+            // Nếu tab có nội dung cuộn được và vuốt không quá mạnh, cho phép cuộn
+            if (isScrollable && swipeDistance < minSwipeDistance) {
+                return; // Không ngăn cuộn
             }
+            e.preventDefault(); // Ngăn cuộn mặc định nếu vuốt mạnh
         }, { passive: false });
-        
-        // Xử lý sự kiện bắt đầu chạm
+
         function handleTouchStart(event) {
             touchStartY = event.touches[0].clientY;
             touchStartTime = new Date().getTime();
         }
-        
-        // Xử lý sự kiện kết thúc chạm
+
         function handleTouchEnd(event) {
             if (isProcessingSwipe) return;
-            
+
             touchEndY = event.changedTouches[0].clientY;
             touchEndTime = new Date().getTime();
-            
-            // Tính toán khoảng cách và thời gian vuốt
+
             const swipeDistance = touchEndY - touchStartY;
             const swipeTime = touchEndTime - touchStartTime;
-            
-            // Kiểm tra xem cử chỉ chạm có phải là vuốt hợp lệ không
+            const activeTab = document.querySelector('.tab-content.active');
+            const isScrollable = activeTab.scrollHeight > activeTab.clientHeight;
+
+            // Kiểm tra nếu tab có nội dung cuộn được
+            if (isScrollable) {
+                const isAtTop = activeTab.scrollTop === 0;
+                const isAtBottom = activeTab.scrollTop + activeTab.clientHeight >= activeTab.scrollHeight;
+
+                // Chỉ chuyển tab khi ở đầu hoặc cuối nội dung và vuốt hợp lệ
+                if (
+                    (swipeDistance < 0 && isAtBottom) || // Vuốt lên và ở cuối
+                    (swipeDistance > 0 && isAtTop) // Vuốt xuống và ở đầu
+                ) {
+                    processSwipe(swipeDistance, swipeTime);
+                }
+            } else {
+                // Nếu không có nội dung cuộn, xử lý vuốt bình thường
+                processSwipe(swipeDistance, swipeTime);
+            }
+        }
+
+        function processSwipe(swipeDistance, swipeTime) {
             if (Math.abs(swipeDistance) >= minSwipeDistance && swipeTime <= maxSwipeTime) {
                 isProcessingSwipe = true;
-                
-                // Truy cập chức năng chuyển tab hiện có
+
                 const menuItems = document.querySelectorAll('.menu-item');
                 const tabContents = document.querySelectorAll('.tab-content');
-                
-                // Tìm chỉ mục tab hiện tại
                 let currentTabIndex = 0;
+
                 menuItems.forEach((item, index) => {
                     if (item.classList.contains('active')) {
                         currentTabIndex = index;
                     }
                 });
-                
-                // Xác định hướng vuốt và chuyển tab tương ứng
+
                 if (swipeDistance < 0) {
                     // Vuốt lên - chuyển đến tab tiếp theo
                     if (currentTabIndex < tabContents.length - 1) {
@@ -72,30 +87,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         switchTab(currentTabIndex - 1);
                     }
                 }
-                
-                // Đặt lại cờ xử lý sau một độ trễ
+
                 setTimeout(() => {
                     isProcessingSwipe = false;
                 }, 500);
             }
         }
-        
-        // Hàm để chuyển tab - sử dụng hàm switchTab hiện có từ script.js
+
         function switchTab(index) {
             if (typeof window.switchTab === 'function') {
                 window.switchTab(index);
             } else {
                 const menuItems = document.querySelectorAll('.menu-item');
                 const tabContents = document.querySelectorAll('.tab-content');
-                
+
                 if (index < 0 || index >= tabContents.length) return;
-                
+
                 menuItems.forEach(item => item.classList.remove('active'));
                 tabContents.forEach(tab => tab.classList.remove('active'));
-                
+
                 menuItems[index].classList.add('active');
                 tabContents[index].classList.add('active');
-                
+
                 setTimeout(() => {
                     if (typeof AOS !== 'undefined' && typeof AOS.refresh === 'function') {
                         AOS.refresh();
@@ -103,10 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 100);
             }
         }
-        
+
         console.log('Đã khởi tạo hỗ trợ vuốt cho thiết bị di động');
-        
-        // Cập nhật nút cuộn lên đầu trang khi vuốt
+
         const scrollToTopBtn = document.querySelector('.scroll-to-top');
         if (scrollToTopBtn) {
             tabContainer.addEventListener('touchend', function() {
